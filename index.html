@@ -146,21 +146,23 @@
     background-position:right -10px bottom -10px;
     background-size:78%;
     color:var(--text-light);
-    margin:-1px 20px 0; border-radius:var(--radius);
+    margin:-1px 20px -35px; border-radius:var(--radius);
     padding:16px 18px; position:relative; overflow:hidden;
     box-shadow:0 14px 28px rgba(11,43,38,.25);
     flex-shrink:0;
+    transform: scale(0.7);
+    transform-origin: center top;
   }
   .snapshot::before{
     content:''; position:absolute; right:-30px; top:-30px; width:140px; height:140px;
     border:1px solid rgba(212,166,71,.18); border-radius:50%;
   }
-  .snapshot-label{font-family:var(--mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase; color:var(--text-muted);}
-  .snapshot-amt{font-family:var(--display); font-size:14px; font-weight:600; margin:3px 0 12px; color:var(--gold-soft);}
+  .snapshot-label{font-family:var(--mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase; color:#f1aeb5;}
+  .snapshot-amt{font-family:var(--display); font-size:14px; font-weight:600; margin:3px 0 12px; background:linear-gradient(90deg, #f7d273, #ff8a00); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
   .snapshot-row{display:flex; gap:10px; flex-wrap:nowrap; justify-content:space-between;}
   .snapshot-stat{min-width:0;}
-  .snapshot-stat .v{font-family:var(--mono); font-size:13.5px; font-weight:600; color:var(--text-light); white-space:nowrap;}
-  .snapshot-stat .l{font-size:9.5px; color:var(--text-muted); margin-top:2px; white-space:nowrap;}
+  .snapshot-stat .v{font-family:var(--mono); font-size:13.5px; font-weight:600; color:#5ee7df; white-space:nowrap;}
+  .snapshot-stat .l{font-size:9.5px; color:#b490ca; margin-top:2px; white-space:nowrap;}
 
   /* Sector grid */
   .sector-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
@@ -209,7 +211,7 @@
     cursor:pointer; color:#a4a99e; font-size:9.5px; font-family:var(--mono); letter-spacing:.04em;
   }
   .navitem.active{color:var(--ink);}
-  .navitem .ic{font-size:17px;}
+  .navitem .ic{font-size:20px;}
 
   /* Plan cards (lock-in periods) */
   .plan-card{
@@ -344,23 +346,7 @@
 
   .btn:disabled{ background:#ddd4ba; color:#9c9583; cursor:not-allowed; }
 
-  /* Logo Animation */
-  .b1 { animation: b1 3.5s infinite; opacity:0; }
-  .b2 { animation: b2 3.5s infinite; opacity:0; }
-  .b3 { animation: b3 3.5s infinite; opacity:0; }
-  .b4 { animation: b4 3.5s infinite; opacity:0; }
-  .b5 { animation: b5 3.5s infinite; opacity:0; }
-  .arr { animation: drawArr 3.5s infinite; stroke-dasharray: 40; stroke-dashoffset: 40; opacity:0; }
-  @keyframes b1 { 0%, 95%, 100%{opacity:0} 5%, 90%{opacity:1} }
-  @keyframes b2 { 0%, 10%, 95%, 100%{opacity:0} 15%, 90%{opacity:1} }
-  @keyframes b3 { 0%, 20%, 95%, 100%{opacity:0} 25%, 90%{opacity:1} }
-  @keyframes b4 { 0%, 30%, 95%, 100%{opacity:0} 35%, 90%{opacity:1} }
-  @keyframes b5 { 0%, 40%, 95%, 100%{opacity:0} 45%, 90%{opacity:1} }
-  @keyframes drawArr {
-    0%, 45%, 95%, 100% { stroke-dashoffset: 40; opacity:0; }
-    46% { opacity:1; }
-    65%, 90% { stroke-dashoffset: 0; opacity:1; }
-  }
+
 </style>
 </head>
 <body>
@@ -373,7 +359,7 @@
     <!-- ===================== SPLASH ===================== -->
     <div class="screen active" id="screen-splash" style="background:var(--ink); align-items:center; justify-content:center;">
       <div style="text-align:center;">
-        <div class="seal" style="width:54px; height:54px; margin:0 auto 16px;"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="seal" style="width:54px; height:54px; margin:0 auto 16px;"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div>
         <div class="login-wordmark" style="font-size:34px;"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div>
         <div class="brand-sub" style="margin-top:8px; justify-content:center;">Your trusted investment partner</div>
       </div>
@@ -382,7 +368,7 @@
     <!-- ===================== LOGIN ===================== -->
     <div class="screen" id="screen-login">
       <div class="hero-band" style="padding-top:46px;">
-        <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div>
         <div class="login-wordmark"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div>
         <h2 style="margin-top:14px;">Your trusted investment partner</h2>
         <p>Guaranteed monthly returns on real assets — villas, resorts, restaurants, layouts and more.</p>
@@ -413,11 +399,10 @@
 
     <!-- ===================== ACCOUNT DETAILS ===================== -->
     <div class="screen" id="screen-account">
-      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Account details</div><div class="brand-sub">For income payouts</div></div></div></div>
+      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div><div><div class="brand-name">Account details</div><div class="brand-sub">For income payouts</div></div></div></div>
       <div class="content" style="padding-top:20px;">
         <div class="notif" style="border-left-color:var(--gold);">
           <div class="notif-title">Please update your account details</div>
-          <div class="notif-body">Add your bank details so income and maturity payouts can be credited.</div>
         </div>
 
         <div class="section-label">Bank account for payouts</div>
@@ -438,7 +423,7 @@
     <div class="screen" id="screen-home">
       <div class="topbar">
         <div class="brand-row">
-          <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div>
           <div><div class="brand-name"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div><div class="brand-sub">Investments</div></div>
         </div>
         <div onclick="goto('screen-notif')" class="bell">🔔</div>
@@ -456,8 +441,7 @@
 
       <div class="content">
         <div id="home-acc-banner" class="notif" style="border-left-color:var(--gold); display:none;">
-          <div class="notif-title">Please update your account details</div>
-          <div class="notif-body">Add your bank details so income and maturity payouts can be credited. <span class="toplink" style="color:var(--ink-2);" onclick="goto('screen-account')">Add now →</span></div>
+          <div class="notif-title"><span onclick="goto('screen-account')" style="cursor:pointer; text-decoration:underline;">Click here to update your account details</span></div>
         </div>
 
         <div class="section-label">Invest by sector</div>
@@ -475,10 +459,10 @@
       </div>
 
       <div class="bottomnav">
-        <div class="navitem active" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
-        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem active" onclick="goto('screen-home')"><div class="ic">🏠</div>Home</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">📊</div>Portfolio</div>
         <div class="navitem" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
-        <div class="navitem" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
+        <div class="navitem" onclick="goto('screen-more')"><div class="ic">⚙️</div>More</div>
       </div>
     </div>
 
@@ -519,7 +503,7 @@
 
     <!-- ===================== PORTFOLIO ===================== -->
     <div class="screen" id="screen-portfolio">
-      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Portfolio</div><div class="brand-sub">Sector-wise holdings</div></div></div></div>
+      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div><div><div class="brand-name">Portfolio</div><div class="brand-sub">Sector-wise holdings</div></div></div></div>
 
       <div class="subtabbar">
         <div class="subtabs">
@@ -584,17 +568,17 @@
 
       </div>
       <div class="bottomnav">
-        <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
-        <div class="navitem active" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-home')"><div class="ic">🏠</div>Home</div>
+        <div class="navitem active" onclick="goto('screen-portfolio')"><div class="ic">📊</div>Portfolio</div>
         <div class="navitem" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
-        <div class="navitem" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
+        <div class="navitem" onclick="goto('screen-more')"><div class="ic">⚙️</div>More</div>
       </div>
     </div>
 
     <!-- ===================== REFER & EARN ===================== -->
     <div class="screen" id="screen-refer">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Refer &amp; Earn</div><div class="brand-sub">Invite friends, earn rewards</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div><div><div class="brand-name">Refer &amp; Earn</div><div class="brand-sub">Invite friends, earn rewards</div></div></div>
       </div>
       <div class="content" style="padding-top:20px;">
         <div class="hero-band" style="border-radius:16px; padding:20px;">
@@ -613,17 +597,17 @@
         <div class="summary-line"><div class="l">3. ₹500 credited to both of you</div></div>
       </div>
       <div class="bottomnav">
-        <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
-        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-home')"><div class="ic">🏠</div>Home</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">📊</div>Portfolio</div>
         <div class="navitem active" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
-        <div class="navitem" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
+        <div class="navitem" onclick="goto('screen-more')"><div class="ic">⚙️</div>More</div>
       </div>
     </div>
 
     <!-- ===================== NOTIFICATIONS ===================== -->
     <div class="screen" id="screen-notif">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Alerts</div><div class="brand-sub">Maturity &amp; income</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div><div><div class="brand-name">Alerts</div><div class="brand-sub">Maturity &amp; income</div></div></div>
         <span class="toplink" onclick="goto('screen-more')">Close</span>
       </div>
       <div class="content">
@@ -637,7 +621,7 @@
     <!-- ===================== PROFILE ===================== -->
     <div class="screen" id="screen-profile">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Profile</div><div class="brand-sub">Aravind Kumar</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div><div><div class="brand-name">Profile</div><div class="brand-sub">Aravind Kumar</div></div></div>
         <span class="toplink" onclick="goto('screen-more')">Close</span>
       </div>
       <div class="content">
@@ -660,7 +644,7 @@
 
     <!-- ===================== MORE ===================== -->
     <div class="screen" id="screen-more">
-      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">More</div><div class="brand-sub">Account &amp; settings</div></div></div></div>
+      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div><div><div class="brand-name">More</div><div class="brand-sub">Account &amp; settings</div></div></div></div>
       <div class="content">
         <div class="section-label">Account</div>
         <div class="investor-row" onclick="goto('screen-profile')" style="cursor:pointer;">
@@ -689,17 +673,17 @@
         </div>
       </div>
       <div class="bottomnav">
-        <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
-        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-home')"><div class="ic">🏠</div>Home</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">📊</div>Portfolio</div>
         <div class="navitem" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
-        <div class="navitem active" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
+        <div class="navitem active" onclick="goto('screen-more')"><div class="ic">⚙️</div>More</div>
       </div>
     </div>
 
     <!-- ===================== ADMIN ===================== -->
     <div class="screen" id="screen-admin">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Admin</div><div class="brand-sub">Investor &amp; sector overview</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)" opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.1;0.15;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.2;0.25;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.3;0.35;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.4;0.45;0.9;1" dur="3.5s" repeatCount="indefinite"/></rect><path d="M2 13 L20 3 L17.5 3 M20 3 L20 5.5" stroke="#00e5ff" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="40" stroke-dashoffset="40" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.46;0.9;1" dur="3.5s" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" values="40;40;0;0;40" keyTimes="0;0.46;0.65;0.9;1" dur="3.5s" repeatCount="indefinite"/></path></svg></div><div><div class="brand-name">Admin</div><div class="brand-sub">Investor &amp; sector overview</div></div></div>
         <span class="toplink" onclick="goto('screen-more')">Exit</span>
       </div>
       <div class="content">
