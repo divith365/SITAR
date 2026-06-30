@@ -120,7 +120,7 @@
 
   /* Sticky sub-tab bar (used inside Investment screen) */
   .subtabbar{
-    flex-shrink:0; background:#fff; border-bottom:1px solid #e4ddc9;
+    flex-shrink:0; background:#FBF8F1; border-bottom:1px solid #e4ddc9;
     display:flex; align-items:center; justify-content:space-between;
     padding:10px 20px; gap:10px;
     position:sticky; top:84px; z-index:29;
@@ -146,11 +146,11 @@
     background-position:right -10px bottom -10px;
     background-size:78%;
     color:var(--text-light);
-    margin:-1px 20px -35px; border-radius:var(--radius);
+    margin:-1px 20px -20px; border-radius:var(--radius);
     padding:16px 18px; position:relative; overflow:hidden;
     box-shadow:0 14px 28px rgba(11,43,38,.25);
     flex-shrink:0;
-    transform: scale(0.7);
+    transform: scale(0.8);
     transform-origin: center top;
   }
   .snapshot::before{
@@ -166,15 +166,24 @@
 
   /* Sector grid */
   .sector-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  /* Each sector card — unique gradient, no image dependency */
+  .bg-villas      { background: linear-gradient(135deg, #7B2D00 0%, #C1542C 50%, #E07B50 100%); }
+  .bg-apartments  { background: linear-gradient(135deg, #0D1B4B 0%, #1B3A8A 50%, #2E5FC0 100%); }
+  .bg-layout      { background: linear-gradient(135deg, #0B3D20 0%, #1E7A45 50%, #3AAF6A 100%); }
+  .bg-restaurants { background: linear-gradient(135deg, #4A0A4A 0%, #8B1A8B 50%, #C040C0 100%); }
+  .bg-resorts     { background: linear-gradient(135deg, #003D4D 0%, #006D8F 50%, #00A8D4 100%); }
+  .bg-microfinance{ background: linear-gradient(135deg, #4D2E00 0%, #9C6010 50%, #D4A020 100%); }
   .sector-card{
-    background:#fff; border:1px solid #e4ddc9; border-radius:14px;
-    padding:14px; cursor:pointer; transition:transform .15s;
-    position:relative;
+    background:transparent; border:none; border-radius:14px;
+    padding:14px; cursor:pointer; transition:transform .15s, opacity .15s;
+    position:relative; overflow:hidden;
+    box-shadow:0 6px 18px rgba(0,0,0,0.3);
+    min-height:100px;
   }
-  .sector-card:active{transform:scale(.97);}
-  .sector-icon{font-size:22px;}
-  .sector-name{font-family:var(--display); font-weight:600; font-size:15px; margin-top:8px;}
-  .sector-rate{font-family:var(--mono); font-size:11px; color:var(--green-good); margin-top:4px;}
+  .sector-card:active{transform:scale(.92); opacity:0.85;}
+  .sector-icon{font-size:26px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));}
+  .sector-name{font-family:var(--display); font-weight:700; font-size:14px; margin-top:6px; color:#ffffff; text-shadow:0 2px 8px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.9);}
+  .sector-rate{font-family:var(--display); font-size:11.5px; color:#ffe066; margin-top:4px; text-shadow:0 2px 8px rgba(0,0,0,1); font-weight:800; letter-spacing:0.02em;}
 
   /* Buttons */
   .btn{
@@ -197,13 +206,13 @@
   .field label{font-size:11.5px; font-weight:600; color:#56615b; display:block; margin-bottom:5px; letter-spacing:.02em;}
   .field input, .field select{
     width:100%; padding:12px 13px; border-radius:10px; border:1.4px solid #ddd4ba;
-    background:#fff; font-family:var(--body); font-size:14px; color:var(--text-dark);
+    background:#FBF8F1; font-family:var(--body); font-size:14px; color:var(--text-dark);
   }
   .field input:focus, .field select:focus{outline:none; border-color:var(--gold);}
 
   /* Bottom nav */
   .bottomnav{
-    display:flex; background:#fff; border-top:1px solid #e4ddc9;
+    display:flex; background:#FBF8F1; border-top:1px solid #e4ddc9;
     padding:10px 6px 18px; position:sticky; bottom:0; z-index:30;
   }
   .navitem{
@@ -217,7 +226,7 @@
   .plan-card{
     border:1.4px solid #e4ddc9; border-radius:14px; padding:14px 16px;
     display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:10px; cursor:pointer; background:#fff;
+    margin-bottom:10px; cursor:pointer; background:#FBF8F1;
   }
   .plan-card.selected{border-color:var(--gold); background:#FBF6E8;}
   .plan-term{font-family:var(--display); font-weight:600; font-size:16px;}
@@ -235,7 +244,7 @@
 
   /* Investment row in portfolio */
   .inv-row{
-    background:#fff; border:1px solid #e4ddc9; border-radius:14px; padding:11px 14px;
+    background:#FBF8F1; border:1px solid #e4ddc9; border-radius:14px; padding:11px 14px;
     margin-bottom:8px; display:flex; gap:12px; align-items:center;
   }
   .ring{
@@ -255,7 +264,7 @@
 
   /* Notification */
   .notif{
-    background:#fff; border-left:3px solid var(--gold); border-radius:0 12px 12px 0;
+    background:#FBF8F1; border-left:3px solid var(--gold); border-radius:0 12px 12px 0;
     padding:13px 14px; margin-bottom:10px;
   }
   .notif.urgent{border-left-color:var(--rust);}
@@ -276,7 +285,7 @@
   .modal-handle{width:36px; height:4px; background:#ddd4ba; border-radius:2px; margin:0 auto 16px;}
   .upi-opt{
     display:flex; align-items:center; gap:12px; padding:12px; border:1.4px solid #e4ddc9;
-    border-radius:12px; margin-bottom:8px; cursor:pointer; background:#fff;
+    border-radius:12px; margin-bottom:8px; cursor:pointer; background:#FBF8F1;
   }
   .upi-opt.selected{border-color:var(--gold); background:#FBF6E8;}
   .upi-logo{width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; font-weight:700;}
@@ -294,14 +303,14 @@
 
   /* Admin */
   .admin-stat{
-    background:#fff; border:1px solid #e4ddc9; border-radius:12px; padding:12px;
+    background:#FBF8F1; border:1px solid #e4ddc9; border-radius:12px; padding:12px;
     text-align:center;
   }
   .admin-stat .v{font-family:var(--mono); font-weight:700; font-size:16px;}
   .admin-stat .l{font-size:9.5px; color:#82897f; margin-top:3px;}
   .admin-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:14px 0 4px;}
   .investor-row{
-    background:#fff; border:1px solid #e4ddc9; border-radius:12px; padding:12px 14px; margin-bottom:8px;
+    background:#FBF8F1; border:1px solid #e4ddc9; border-radius:12px; padding:12px 14px; margin-bottom:8px;
     display:flex; justify-content:space-between; align-items:center;
   }
   .investor-name{font-weight:700; font-size:13px;}
@@ -446,12 +455,12 @@
 
         <div class="section-label">Invest by sector</div>
         <div class="sector-grid">
-          <div class="sector-card" onclick="openSector('Villas','🏡','12% p.a.')"><div class="sector-icon">🏡</div><div class="sector-name">Villas</div><div class="sector-rate">Up to 12% p.a.</div></div>
-          <div class="sector-card" onclick="openSector('Apartments','🏢','11% p.a.')"><div class="sector-icon">🏢</div><div class="sector-name">Apartments</div><div class="sector-rate">Up to 11% p.a.</div></div>
-          <div class="sector-card" onclick="openSector('Layout Development','📐','13% p.a.')"><div class="sector-icon">📐</div><div class="sector-name">Layout Dev.</div><div class="sector-rate">Up to 13% p.a.</div></div>
-          <div class="sector-card" onclick="openSector('Restaurants','🍽️','10% p.a.')"><div class="sector-icon">🍽️</div><div class="sector-name">Restaurants</div><div class="sector-rate">Up to 10% p.a.</div></div>
-          <div class="sector-card" onclick="openSector('Resorts','🏖️','12.5% p.a.')"><div class="sector-icon">🏖️</div><div class="sector-name">Resorts</div><div class="sector-rate">Up to 12.5% p.a.</div></div>
-          <div class="sector-card" onclick="openSector('Microfinance','🤝','9% p.a.')"><div class="sector-icon">🤝</div><div class="sector-name">Microfinance</div><div class="sector-rate">Up to 9% p.a.</div></div>
+          <div class="sector-card bg-villas" onclick="openSector('Villas','🏡','12% p.a.')"><div class="sector-icon">🏡</div><div class="sector-name">Villas</div><div class="sector-rate">Up to 12% p.a.</div></div>
+          <div class="sector-card bg-apartments" onclick="openSector('Apartments','🏢','11% p.a.')"><div class="sector-icon">🏢</div><div class="sector-name">Apartments</div><div class="sector-rate">Up to 11% p.a.</div></div>
+          <div class="sector-card bg-layout" onclick="openSector('Layout Development','📐','13% p.a.')"><div class="sector-icon">📐</div><div class="sector-name">Layout Dev.</div><div class="sector-rate">Up to 13% p.a.</div></div>
+          <div class="sector-card bg-restaurants" onclick="openSector('Restaurants','🍽️','10% p.a.')"><div class="sector-icon">🍽️</div><div class="sector-name">Restaurants</div><div class="sector-rate">Up to 10% p.a.</div></div>
+          <div class="sector-card bg-resorts" onclick="openSector('Resorts','🏖️','12.5% p.a.')"><div class="sector-icon">🏖️</div><div class="sector-name">Resorts</div><div class="sector-rate">Up to 12.5% p.a.</div></div>
+          <div class="sector-card bg-microfinance" onclick="openSector('Microfinance','🤝','9% p.a.')"><div class="sector-icon">🤝</div><div class="sector-name">Microfinance</div><div class="sector-rate">Up to 9% p.a.</div></div>
         </div>
 
         <div class="section-label">This month</div>
