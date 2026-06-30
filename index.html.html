@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITAR — Investor App Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-2:#24365E;
+    --ink-3:#2F4474;
+    --gold:#D4A647;
+    --gold-soft:#E7CD8F;
+    --rust:#C1542C;
+    --paper:#F5F1E8;
+    --paper-dim:#E8E1D2;
+    --text-light:#F5F1E8;
+    --text-muted:#9FB8B2;
+    --text-dark:#1B2421;
+    --green-good:#5C8B6E;
+    --radius:18px;
+    --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --body: 'Inter', -apple-system, system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html, body{ max-width:100%; overflow-x:hidden; }
+  body{
+    font-family:var(--body);
+    background:#10110f;
+    display:flex; align-items:flex-start; justify-content:center;
+    gap:28px; flex-wrap:wrap;
+    padding:32px 16px;
+    color:var(--text-dark);
+    min-height:100vh;
+  }
+  .device-label{
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:#6b7570; text-align:center; margin-bottom:10px;
+  }
+  .device-wrap{display:flex; flex-direction:column; align-items:center; width:100%; max-width:380px;}
+  .phone{
+    width:min(380px, 92vw);
+    aspect-ratio:380/780;
+    background:var(--ink);
+    border-radius:42px;
+    border:8px solid #050a09;
+    box-shadow:0 30px 60px rgba(0,0,0,.5), inset 0 0 0 1px rgba(212,166,71,.08);
+    overflow:hidden;
+    position:relative;
+    display:flex; flex-direction:column;
+  }
+  .notch{
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:130px; height:24px; background:#050a09; border-radius:0 0 16px 16px; z-index:50;
+  }
+  .screen{
+    flex:1; overflow-y:auto; display:none; flex-direction:column;
+    background:var(--paper); color:var(--text-dark);
+  }
+  .screen.active{display:flex;}
+
+  /* When this prototype is opened directly on a real phone, drop the device-frame chrome
+     and let the app fill the viewport edge-to-edge like a real mobile app would. */
+  @media (max-width:480px){
+    body{ padding:0; align-items:stretch; }
+    .device-label{ display:none; }
+    .device-wrap{ max-width:100%; }
+    .phone{
+      width:100%; height:100dvh; aspect-ratio:auto;
+      border:none; border-radius:0; box-shadow:none;
+    }
+    .notch{ display:none; }
+  }
+  .screen::-webkit-scrollbar{display:none;}
+
+  /* Top bar shared */
+  .topbar{
+    background:var(--ink); color:var(--text-light);
+    padding:34px 20px 16px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .seal{
+    width:34px; height:34px; border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--display); font-weight:700; font-size:14px; color:var(--gold);
+    flex-shrink:0;
+  }
+  .brand-row{display:flex; align-items:center; gap:10px;}
+  .brand-name{font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:.02em;}
+  .wave-letter{
+    display:inline-block;
+    animation:letterWave 2.2s ease-in-out infinite;
+  }
+  @keyframes letterWave{
+    0%, 60%, 100%{ transform:scale(1) translateY(0); color:var(--text-light); }
+    30%{ transform:scale(1.3) translateY(-3px); color:var(--gold); }
+  }
+  .login-wordmark{
+    font-family:var(--display); font-weight:700; font-size:30px; letter-spacing:.06em;
+    color:var(--text-light); margin-top:12px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .wave-letter{ animation:none; }
+  }
+  .brand-sub{font-family:var(--mono); font-size:9.5px; color:var(--text-muted); letter-spacing:.16em; text-transform:uppercase; margin-top:1px;}
+
+  .bell{width:20px; height:20px; opacity:.85; cursor:pointer;}
+
+  /* Generic content padding */
+  .content{padding:18px 20px 100px;}
+  .section-label{
+    font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+    color:#7d8a82; margin:22px 0 10px; display:flex; align-items:center; gap:10px;
+  }
+  .section-label::after{content:''; flex:1; height:1px; background:#d8d0bc;}
+
+  /* Portfolio snapshot card on Home */
+  .snapshot{
+    background:var(--ink); color:var(--text-light);
+    margin:-1px 20px 0; border-radius:var(--radius);
+    padding:16px 18px; position:relative; overflow:hidden;
+    box-shadow:0 14px 28px rgba(11,43,38,.25);
+    flex-shrink:0;
+  }
+  .snapshot::before{
+    content:''; position:absolute; right:-30px; top:-30px; width:140px; height:140px;
+    border:1px solid rgba(212,166,71,.18); border-radius:50%;
+  }
+  .snapshot-label{font-family:var(--mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase; color:var(--text-muted);}
+  .snapshot-amt{font-family:var(--display); font-size:28px; font-weight:600; margin:3px 0 12px; color:var(--gold-soft);}
+  .snapshot-row{display:flex; gap:10px; flex-wrap:nowrap; justify-content:space-between;}
+  .snapshot-stat{min-width:0;}
+  .snapshot-stat .v{font-family:var(--mono); font-size:13.5px; font-weight:600; color:var(--text-light); white-space:nowrap;}
+  .snapshot-stat .l{font-size:9.5px; color:var(--text-muted); margin-top:2px; white-space:nowrap;}
+
+  /* Sector grid */
+  .sector-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .sector-card{
+    background:#fff; border:1px solid #e4ddc9; border-radius:14px;
+    padding:14px; cursor:pointer; transition:transform .15s;
+    position:relative;
+  }
+  .sector-card:active{transform:scale(.97);}
+  .sector-icon{font-size:22px;}
+  .sector-name{font-family:var(--display); font-weight:600; font-size:15px; margin-top:8px;}
+  .sector-rate{font-family:var(--mono); font-size:11px; color:var(--green-good); margin-top:4px;}
+
+  /* Buttons */
+  .btn{
+    display:block; width:100%; text-align:center;
+    background:var(--gold); color:var(--ink);
+    font-family:var(--body); font-weight:700; font-size:14px;
+    padding:14px; border-radius:12px; border:none; cursor:pointer;
+    letter-spacing:.01em;
+  }
+  .btn:active{opacity:.85;}
+  .btn-outline{
+    background:transparent; border:1.4px solid var(--ink); color:var(--ink);
+  }
+  .btn-ghost{
+    background:transparent; color:var(--ink-2); font-weight:600; text-decoration:underline; padding:10px;
+  }
+
+  /* Form */
+  .field{margin-bottom:14px;}
+  .field label{font-size:11.5px; font-weight:600; color:#56615b; display:block; margin-bottom:5px; letter-spacing:.02em;}
+  .field input, .field select{
+    width:100%; padding:12px 13px; border-radius:10px; border:1.4px solid #ddd4ba;
+    background:#fff; font-family:var(--body); font-size:14px; color:var(--text-dark);
+  }
+  .field input:focus, .field select:focus{outline:none; border-color:var(--gold);}
+
+  /* Bottom nav */
+  .bottomnav{
+    display:flex; background:#fff; border-top:1px solid #e4ddc9;
+    padding:10px 6px 18px; position:relative; z-index:20;
+  }
+  .navitem{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
+    cursor:pointer; color:#a4a99e; font-size:9.5px; font-family:var(--mono); letter-spacing:.04em;
+  }
+  .navitem.active{color:var(--ink);}
+  .navitem .ic{font-size:17px;}
+
+  /* Plan cards (lock-in periods) */
+  .plan-card{
+    border:1.4px solid #e4ddc9; border-radius:14px; padding:14px 16px;
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:10px; cursor:pointer; background:#fff;
+  }
+  .plan-card.selected{border-color:var(--gold); background:#FBF6E8;}
+  .plan-term{font-family:var(--display); font-weight:600; font-size:16px;}
+  .plan-sub{font-size:11px; color:#82897f; margin-top:2px;}
+  .plan-rate{font-family:var(--mono); font-weight:600; font-size:15px; color:var(--green-good); text-align:right;}
+  .plan-rate small{display:block; font-size:9px; color:#82897f; font-weight:400;}
+
+  .hero-band{
+    background:linear-gradient(135deg, var(--ink-3), var(--ink));
+    color:var(--text-light); padding:22px 20px; position:relative;
+  }
+  .hero-band .ic-big{font-size:30px;}
+  .hero-band h2{font-family:var(--display); font-size:22px; font-weight:600; margin-top:6px;}
+  .hero-band p{font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.5;}
+
+  /* Investment row in portfolio */
+  .inv-row{
+    background:#fff; border:1px solid #e4ddc9; border-radius:14px; padding:14px;
+    margin-bottom:10px; display:flex; gap:12px; align-items:center;
+  }
+  .ring{
+    width:52px; height:52px; flex-shrink:0; position:relative;
+  }
+  .ring svg{transform:rotate(-90deg);}
+  .ring .pct{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:10px; font-weight:600; color:var(--ink);
+  }
+  .inv-info{flex:1;}
+  .inv-name{font-weight:700; font-size:13.5px;}
+  .inv-meta{font-size:10.5px; color:#82897f; margin-top:2px;}
+  .inv-amt{text-align:right;}
+  .inv-amt .a{font-family:var(--mono); font-weight:600; font-size:13.5px;}
+  .inv-amt .g{font-size:10px; color:var(--green-good); margin-top:2px;}
+
+  /* Notification */
+  .notif{
+    background:#fff; border-left:3px solid var(--gold); border-radius:0 12px 12px 0;
+    padding:13px 14px; margin-bottom:10px;
+  }
+  .notif.urgent{border-left-color:var(--rust);}
+  .notif-title{font-weight:700; font-size:13px;}
+  .notif-body{font-size:12px; color:#666; margin-top:3px; line-height:1.4;}
+  .notif-time{font-family:var(--mono); font-size:9.5px; color:#aaa; margin-top:6px;}
+
+  /* Modal */
+  .modal-overlay{
+    position:absolute; inset:0; background:rgba(11,43,38,.55);
+    display:none; align-items:flex-end; z-index:100;
+  }
+  .modal-overlay.active{display:flex;}
+  .modal{
+    background:var(--paper); width:100%; border-radius:24px 24px 0 0;
+    padding:22px 20px 30px; max-height:88%; overflow-y:auto;
+  }
+  .modal-handle{width:36px; height:4px; background:#ddd4ba; border-radius:2px; margin:0 auto 16px;}
+  .upi-opt{
+    display:flex; align-items:center; gap:12px; padding:12px; border:1.4px solid #e4ddc9;
+    border-radius:12px; margin-bottom:8px; cursor:pointer; background:#fff;
+  }
+  .upi-opt.selected{border-color:var(--gold); background:#FBF6E8;}
+  .upi-logo{width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; font-weight:700;}
+
+  .summary-line{display:flex; justify-content:space-between; padding:8px 0; font-size:13px; border-bottom:1px dashed #ddd4ba;}
+  .summary-line:last-of-type{border-bottom:none;}
+  .summary-line .l{color:#666;}
+  .summary-line .v{font-family:var(--mono); font-weight:600;}
+
+  .success-wrap{text-align:center; padding:30px 10px;}
+  .success-seal{
+    width:64px; height:64px; border-radius:50%; border:2px solid var(--green-good);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:28px; color:var(--green-good);
+  }
+
+  /* Admin */
+  .admin-stat{
+    background:#fff; border:1px solid #e4ddc9; border-radius:12px; padding:12px;
+    text-align:center;
+  }
+  .admin-stat .v{font-family:var(--mono); font-weight:700; font-size:16px;}
+  .admin-stat .l{font-size:9.5px; color:#82897f; margin-top:3px;}
+  .admin-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:14px 0 4px;}
+  .investor-row{
+    background:#fff; border:1px solid #e4ddc9; border-radius:12px; padding:12px 14px; margin-bottom:8px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .investor-name{font-weight:700; font-size:13px;}
+  .investor-meta{font-size:10.5px; color:#82897f; margin-top:2px;}
+  .tag{
+    font-family:var(--mono); font-size:9px; background:var(--ink); color:var(--gold-soft);
+    padding:3px 7px; border-radius:6px; letter-spacing:.04em;
+  }
+
+  .toplink{
+    font-family:var(--mono); font-size:10px; color:var(--gold-soft); text-decoration:underline;
+    cursor:pointer; letter-spacing:.04em;
+  }
+
+  .trust-strip{
+    margin-top:14px; display:flex; align-items:center; gap:7px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--gold-soft);
+  }
+  .trust-strip .dot{color:var(--text-muted);}
+
+  .consent-text{
+    font-size:11.5px; color:#56615b; line-height:1.5; margin:14px 0 16px;
+  }
+  .tc-tooltip{
+    position:relative; color:var(--ink-2); text-decoration:underline; font-weight:600; cursor:help;
+  }
+  .tc-popup{
+    display:none; position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+    width:230px; background:var(--ink); color:var(--text-light); font-weight:400;
+    font-size:10.5px; line-height:1.5; padding:10px 12px; border-radius:10px; text-decoration:none;
+    box-shadow:0 10px 24px rgba(0,0,0,.3); z-index:30;
+  }
+  .tc-popup::after{
+    content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+    border:6px solid transparent; border-top-color:var(--ink);
+  }
+  .tc-tooltip:hover .tc-popup{ display:block; }
+
+  .btn:disabled{ background:#ddd4ba; color:#9c9583; cursor:not-allowed; }
+</style>
+</head>
+<body>
+
+<div class="device-wrap">
+  <div class="device-label">Investor App</div>
+  <div class="phone">
+    <div class="notch"></div>
+
+    <!-- ===================== LOGIN ===================== -->
+    <div class="screen active" id="screen-login">
+      <div class="hero-band" style="padding-top:46px;">
+        <div class="seal" style="border-color:var(--gold-soft);">S</div>
+        <div class="login-wordmark"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div>
+        <h2 style="margin-top:14px;">Your trusted investment partner</h2>
+        <p>Guaranteed monthly returns on real assets — villas, resorts, restaurants, layouts and more.</p>
+        <div class="trust-strip">
+          <span>★ 100+ investors</span><span class="dot">·</span><span>₹10Cr+ disbursed</span>
+        </div>
+      </div>
+      <div class="content" style="padding-top:24px;">
+        <div class="section-label">Log in to continue</div>
+        <div class="field"><label>Full name</label><input type="text" id="login-name" placeholder="Aravind Kumar"></div>
+        <div class="field"><label>Phone number</label><input type="tel" id="login-phone" placeholder="+91 98765 43210"></div>
+
+        <button class="btn" id="otp-send-btn" style="margin-top:8px;" onclick="sendOtp()">Send OTP</button>
+
+        <div id="otp-block" style="display:none; margin-top:18px;">
+          <div class="section-label" style="margin-top:0;">Enter OTP</div>
+          <p style="font-size:11.5px; color:#82897f; margin-bottom:10px;">A 6-digit code was sent to <span id="otp-phone-echo" style="font-family:var(--mono);"></span></p>
+          <div class="field"><input type="text" id="otp-input" maxlength="6" placeholder="• • • • • •" style="font-family:var(--mono); letter-spacing:.4em; text-align:center; font-size:18px;"></div>
+          <div id="otp-status" style="display:none; align-items:center; gap:8px; font-size:12.5px; color:var(--green-good); font-weight:700; margin:6px 0 4px;">✓ <span>Verified</span></div>
+
+          <p class="consent-text">By submitting OTP, I agree to the <span class="tc-tooltip">Terms &amp; Conditions<span class="tc-popup">By investing with SITAR, you agree that returns are subject to project performance, lock-in periods are binding until maturity, early withdrawal may attract charges, and SITAR may contact you via SMS/WhatsApp/call regarding your investments.</span></span>.</p>
+
+          <button class="btn" id="otp-verify-btn" onclick="verifyOtp()">Verify &amp; submit</button>
+          <button class="btn-ghost" style="width:100%; text-align:center;" onclick="sendOtp()">Resend OTP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== ACCOUNT DETAILS ===================== -->
+    <div class="screen" id="screen-account">
+      <div class="topbar"><div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Account details</div><div class="brand-sub">For income payouts</div></div></div></div>
+      <div class="content" style="padding-top:20px;">
+        <div class="notif" style="border-left-color:var(--gold);">
+          <div class="notif-title">Please update your account details</div>
+          <div class="notif-body">SITAR pays your monthly income/maturity benefits directly to your bank account.</div>
+        </div>
+
+        <div class="section-label">Bank account for payouts</div>
+        <div class="field"><label>Account holder name</label><input type="text" id="acc-holder" placeholder="As per bank records"></div>
+        <div class="field"><label>Account type</label>
+          <select id="acc-type"><option>Savings</option><option>Current</option></select>
+        </div>
+        <div class="field"><label>Account number</label><input type="text" id="acc-number" placeholder="0123456789012" style="font-family:var(--mono);"></div>
+        <div class="field"><label>IFSC code</label><input type="text" id="acc-ifsc" placeholder="HDFC0001234" style="font-family:var(--mono); text-transform:uppercase;"></div>
+
+        <button class="btn" style="margin-top:8px;" onclick="saveAccountDetails()">Save account details</button>
+        <button class="btn-ghost" style="width:100%; text-align:center; margin-top:4px;" onclick="saveAccountDetails(true)">Will do it later</button>
+        <p style="font-size:10.5px; color:#8a9189; text-align:center; margin-top:12px; line-height:1.5;">Investment payments are made separately via UPI when you invest in a sector.</p>
+      </div>
+    </div>
+
+    <!-- ===================== HOME ===================== -->
+    <div class="screen" id="screen-home">
+      <div class="topbar">
+        <div class="brand-row">
+          <div class="seal">S</div>
+          <div><div class="brand-name"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div><div class="brand-sub">Investments</div></div>
+        </div>
+        <div onclick="goto('screen-notif')" class="bell">🔔</div>
+      </div>
+
+      <div class="snapshot">
+        <div class="snapshot-label">Total Portfolio Value</div>
+        <div class="snapshot-amt">₹ 8,42,000</div>
+        <div class="snapshot-row">
+          <div class="snapshot-stat"><div class="v">₹ 7,10,000</div><div class="l">Invested</div></div>
+          <div class="snapshot-stat"><div class="v">₹ 1,32,000</div><div class="l">Earned so far</div></div>
+          <div class="snapshot-stat"><div class="v">4 active</div><div class="l">Sectors</div></div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div id="home-acc-banner" class="notif" style="border-left-color:var(--gold); display:none;">
+          <div class="notif-title">Please update your account details</div>
+          <div class="notif-body">SITAR pays your monthly income/maturity benefits directly to your bank account. <span class="toplink" style="color:var(--ink-2);" onclick="goto('screen-account')">Add it now →</span></div>
+        </div>
+
+        <div class="section-label">Invest by sector</div>
+        <div class="sector-grid">
+          <div class="sector-card" onclick="openSector('Villas','🏡','12% p.a.')"><div class="sector-icon">🏡</div><div class="sector-name">Villas</div><div class="sector-rate">Up to 12% p.a.</div></div>
+          <div class="sector-card" onclick="openSector('Apartments','🏢','11% p.a.')"><div class="sector-icon">🏢</div><div class="sector-name">Apartments</div><div class="sector-rate">Up to 11% p.a.</div></div>
+          <div class="sector-card" onclick="openSector('Layout Development','📐','13% p.a.')"><div class="sector-icon">📐</div><div class="sector-name">Layout Dev.</div><div class="sector-rate">Up to 13% p.a.</div></div>
+          <div class="sector-card" onclick="openSector('Restaurants','🍽️','10% p.a.')"><div class="sector-icon">🍽️</div><div class="sector-name">Restaurants</div><div class="sector-rate">Up to 10% p.a.</div></div>
+          <div class="sector-card" onclick="openSector('Resorts','🏖️','12.5% p.a.')"><div class="sector-icon">🏖️</div><div class="sector-name">Resorts</div><div class="sector-rate">Up to 12.5% p.a.</div></div>
+          <div class="sector-card" onclick="openSector('Microfinance','🤝','9% p.a.')"><div class="sector-icon">🤝</div><div class="sector-name">Microfinance</div><div class="sector-rate">Up to 9% p.a.</div></div>
+        </div>
+
+        <div class="section-label">This month</div>
+        <div class="notif"><div class="notif-title">Income credited</div><div class="notif-body">₹6,200 monthly income credited to your savings account from Resorts &amp; Villas plans.</div><div class="notif-time">2 days ago</div></div>
+      </div>
+
+      <div class="bottomnav">
+        <div class="navitem active" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-notif')"><div class="ic">🔔</div>Alerts</div>
+        <div class="navitem" onclick="goto('screen-profile')"><div class="ic">☻</div>Profile</div>
+      </div>
+    </div>
+
+    <!-- ===================== SECTOR DETAIL ===================== -->
+    <div class="screen" id="screen-sector">
+      <div class="hero-band">
+        <span class="toplink" onclick="goto('screen-home')">← Back</span>
+        <div class="ic-big" id="sec-icon">🏡</div>
+        <h2 id="sec-name">Villas</h2>
+        <p>Funds are deployed into villa construction &amp; resale projects. Returns are paid monthly, principal returned at maturity.</p>
+      </div>
+      <div class="content">
+        <div class="section-label">Choose lock-in period</div>
+        <div class="plan-card selected" onclick="selectPlan(this)" data-term="1 Year" data-rate="9.5%">
+          <div><div class="plan-term">1 Year</div><div class="plan-sub">Min. ₹25,000</div></div>
+          <div class="plan-rate">9.5%<small>per annum</small></div>
+        </div>
+        <div class="plan-card" onclick="selectPlan(this)" data-term="2 Years" data-rate="10.5%">
+          <div><div class="plan-term">2 Years</div><div class="plan-sub">Min. ₹25,000</div></div>
+          <div class="plan-rate">10.5%<small>per annum</small></div>
+        </div>
+        <div class="plan-card" onclick="selectPlan(this)" data-term="3 Years" data-rate="11.5%">
+          <div><div class="plan-term">3 Years</div><div class="plan-sub">Min. ₹50,000</div></div>
+          <div class="plan-rate">11.5%<small>per annum</small></div>
+        </div>
+        <div class="plan-card" onclick="selectPlan(this)" data-term="5 Years" data-rate="12%">
+          <div><div class="plan-term">5 Years</div><div class="plan-sub">Min. ₹50,000</div></div>
+          <div class="plan-rate">12%<small>per annum</small></div>
+        </div>
+
+        <div class="section-label">Amount</div>
+        <div class="field"><input type="text" id="invest-amount" placeholder="₹ 50,000" style="font-family:var(--mono); font-size:16px;"></div>
+
+        <button class="btn" style="margin-top:10px;" onclick="handleInvestClick()">Invest</button>
+      </div>
+    </div>
+
+    <!-- ===================== PORTFOLIO ===================== -->
+    <div class="screen" id="screen-portfolio">
+      <div class="topbar"><div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Portfolio</div><div class="brand-sub">Sector-wise holdings</div></div></div></div>
+      <div class="content">
+        <div class="section-label">Active investments</div>
+
+        <div class="inv-row">
+          <div class="ring"><svg width="52" height="52"><circle cx="26" cy="26" r="22" stroke="#e4ddc9" stroke-width="5" fill="none"/><circle cx="26" cy="26" r="22" stroke="#5C8B6E" stroke-width="5" fill="none" stroke-dasharray="138" stroke-dashoffset="35" stroke-linecap="round"/></svg><div class="pct">75%</div></div>
+          <div class="inv-info"><div class="inv-name">🏡 Villas — 3 Year</div><div class="inv-meta">Matures 14 Mar 2027 · ₹3,00,000 invested</div></div>
+          <div class="inv-amt"><div class="a">₹34,500</div><div class="g">earned</div></div>
+        </div>
+
+        <div class="inv-row">
+          <div class="ring"><svg width="52" height="52"><circle cx="26" cy="26" r="22" stroke="#e4ddc9" stroke-width="5" fill="none"/><circle cx="26" cy="26" r="22" stroke="#5C8B6E" stroke-width="5" fill="none" stroke-dasharray="138" stroke-dashoffset="90" stroke-linecap="round"/></svg><div class="pct">35%</div></div>
+          <div class="inv-info"><div class="inv-name">🏖️ Resorts — 2 Year</div><div class="inv-meta">Matures 02 Nov 2026 · ₹1,50,000 invested</div></div>
+          <div class="inv-amt"><div class="a">₹14,200</div><div class="g">earned</div></div>
+        </div>
+
+        <div class="inv-row">
+          <div class="ring"><svg width="52" height="52"><circle cx="26" cy="26" r="22" stroke="#e4ddc9" stroke-width="5" fill="none"/><circle cx="26" cy="26" r="22" stroke="#C1542C" stroke-width="5" fill="none" stroke-dasharray="138" stroke-dashoffset="14" stroke-linecap="round"/></svg><div class="pct">90%</div></div>
+          <div class="inv-info"><div class="inv-name">🤝 Microfinance — 1 Year</div><div class="inv-meta">Matures 18 Aug 2026 · ₹60,000 invested</div></div>
+          <div class="inv-amt"><div class="a">₹4,800</div><div class="g">earned</div></div>
+        </div>
+
+        <div class="inv-row">
+          <div class="ring"><svg width="52" height="52"><circle cx="26" cy="26" r="22" stroke="#e4ddc9" stroke-width="5" fill="none"/><circle cx="26" cy="26" r="22" stroke="#5C8B6E" stroke-width="5" fill="none" stroke-dasharray="138" stroke-dashoffset="105" stroke-linecap="round"/></svg><div class="pct">24%</div></div>
+          <div class="inv-info"><div class="inv-name">📐 Layout Dev. — 5 Year</div><div class="inv-meta">Matures 09 Jan 2031 · ₹2,00,000 invested</div></div>
+          <div class="inv-amt"><div class="a">₹26,000</div><div class="g">earned</div></div>
+        </div>
+
+        <div class="section-label">By sector — totals</div>
+        <div class="summary-line"><div class="l">🏡 Villas</div><div class="v">₹3,00,000</div></div>
+        <div class="summary-line"><div class="l">🏖️ Resorts</div><div class="v">₹1,50,000</div></div>
+        <div class="summary-line"><div class="l">📐 Layout Development</div><div class="v">₹2,00,000</div></div>
+        <div class="summary-line"><div class="l">🤝 Microfinance</div><div class="v">₹60,000</div></div>
+
+        <div class="summary-line" style="margin-top:6px; border-top:1.4px solid var(--ink); padding-top:12px;"><div class="l" style="font-weight:700; color:var(--text-dark);">Total investment</div><div class="v" style="font-weight:700; font-size:14.5px;">₹7,10,000</div></div>
+        <div class="summary-line"><div class="l" style="font-weight:700; color:var(--text-dark);">Total earning so far</div><div class="v" style="font-weight:700; font-size:14.5px; color:var(--green-good);">₹1,32,000</div></div>
+      </div>
+      <div class="bottomnav">
+        <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
+        <div class="navitem active" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-notif')"><div class="ic">🔔</div>Alerts</div>
+        <div class="navitem" onclick="goto('screen-profile')"><div class="ic">☻</div>Profile</div>
+      </div>
+    </div>
+
+    <!-- ===================== NOTIFICATIONS ===================== -->
+    <div class="screen" id="screen-notif">
+      <div class="topbar"><div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Alerts</div><div class="brand-sub">Maturity &amp; income</div></div></div></div>
+      <div class="content">
+        <div class="notif urgent"><div class="notif-title">Maturity in 7 days</div><div class="notif-body">Your Microfinance plan (₹60,000, 1 Year) matures on 18 Aug 2026. Choose to withdraw or reinvest.</div><div class="notif-time">Today, 9:00 AM</div></div>
+        <div class="notif"><div class="notif-title">Monthly income credited</div><div class="notif-body">₹6,200 credited to your savings account from Resorts &amp; Villas plans.</div><div class="notif-time">2 days ago</div></div>
+        <div class="notif"><div class="notif-title">Investment confirmed</div><div class="notif-body">₹2,00,000 invested in Layout Development (5 Year plan) confirmed via UPI.</div><div class="notif-time">3 weeks ago</div></div>
+        <div class="notif"><div class="notif-title">Upcoming maturity</div><div class="notif-body">Resorts plan (₹1,50,000) matures on 02 Nov 2026 — 127 days remaining.</div><div class="notif-time">1 month ago</div></div>
+      </div>
+      <div class="bottomnav">
+        <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem active" onclick="goto('screen-notif')"><div class="ic">🔔</div>Alerts</div>
+        <div class="navitem" onclick="goto('screen-profile')"><div class="ic">☻</div>Profile</div>
+      </div>
+    </div>
+
+    <!-- ===================== PROFILE ===================== -->
+    <div class="screen" id="screen-profile">
+      <div class="topbar"><div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Profile</div><div class="brand-sub">Aravind Kumar</div></div></div></div>
+      <div class="content">
+        <div class="section-label">Personal details</div>
+        <div class="summary-line"><div class="l">Name</div><div class="v">Aravind Kumar</div></div>
+        <div class="summary-line"><div class="l">Phone</div><div class="v">+91 98765 43210</div></div>
+
+        <div class="section-label">Payout bank account</div>
+        <div class="summary-line"><div class="l">Account name</div><div class="v">Aravind Kumar</div></div>
+        <div class="summary-line"><div class="l">Type</div><div class="v">Savings</div></div>
+        <div class="summary-line"><div class="l">Account no.</div><div class="v">XXXX XXXX 9012</div></div>
+        <div class="summary-line"><div class="l">IFSC</div><div class="v">HDFC0001234</div></div>
+
+        <button class="btn btn-outline" style="margin-top:18px;" onclick="goto('screen-account')">Edit bank details</button>
+
+        <div class="section-label">Demo views</div>
+        <button class="btn-ghost" onclick="goto('screen-admin')" style="display:block; text-align:left; padding-left:0;">View Admin Dashboard →</button>
+      </div>
+      <div class="bottomnav">
+        <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-notif')"><div class="ic">🔔</div>Alerts</div>
+        <div class="navitem active" onclick="goto('screen-profile')"><div class="ic">☻</div>Profile</div>
+      </div>
+    </div>
+
+    <!-- ===================== ADMIN ===================== -->
+    <div class="screen" id="screen-admin">
+      <div class="topbar">
+        <div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Admin</div><div class="brand-sub">Investor &amp; sector overview</div></div></div>
+        <span class="toplink" onclick="goto('screen-profile')">Exit</span>
+      </div>
+      <div class="content">
+        <div class="admin-grid">
+          <div class="admin-stat"><div class="v">214</div><div class="l">Investors</div></div>
+          <div class="admin-stat"><div class="v">₹4.1Cr</div><div class="l">Total raised</div></div>
+          <div class="admin-stat"><div class="v">11</div><div class="l">Maturing &lt;30d</div></div>
+        </div>
+
+        <div class="section-label">Raised by sector</div>
+        <div class="summary-line"><div class="l">🏡 Villas</div><div class="v">₹1.2Cr</div></div>
+        <div class="summary-line"><div class="l">🏢 Apartments</div><div class="v">₹85L</div></div>
+        <div class="summary-line"><div class="l">📐 Layout Dev.</div><div class="v">₹64L</div></div>
+        <div class="summary-line"><div class="l">🍽️ Restaurants</div><div class="v">₹38L</div></div>
+        <div class="summary-line"><div class="l">🏖️ Resorts</div><div class="v">₹70L</div></div>
+        <div class="summary-line"><div class="l">🤝 Microfinance</div><div class="v">₹33L</div></div>
+
+        <div class="section-label">Investors</div>
+        <div class="investor-row">
+          <div><div class="investor-name">Aravind Kumar</div><div class="investor-meta">4 sectors · ₹7,10,000 invested</div></div>
+          <span class="tag">ACTIVE</span>
+        </div>
+        <div class="investor-row">
+          <div><div class="investor-name">Priya Raghavan</div><div class="investor-meta">2 sectors · ₹2,40,000 invested</div></div>
+          <span class="tag">ACTIVE</span>
+        </div>
+        <div class="investor-row">
+          <div><div class="investor-name">Mohammed Faizal</div><div class="investor-meta">1 sector · ₹50,000 invested</div></div>
+          <span class="tag" style="background:var(--rust);">DUE 7D</span>
+        </div>
+        <div class="investor-row">
+          <div><div class="investor-name">Lakshmi Narayanan</div><div class="investor-meta">3 sectors · ₹3,80,000 invested</div></div>
+          <span class="tag">ACTIVE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== ACCOUNT-MISSING GATE MODAL ===================== -->
+    <div class="modal-overlay" id="gate-modal">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="success-wrap" style="padding-top:10px;">
+          <div class="success-seal" style="border-color:var(--gold); color:var(--gold);">!</div>
+          <h2 style="font-family:var(--display); font-size:19px;">Please update your account details</h2>
+          <p style="font-size:12.5px; color:#666; margin-top:8px; line-height:1.6;">SITAR pays your monthly income/maturity benefits directly to your bank account.</p>
+          <button class="btn" style="margin-top:18px;" onclick="closeGateModal(); goto('screen-account');">Update account details</button>
+          <button class="btn-ghost" style="width:100%; text-align:center; margin-top:6px;" onclick="closeGateModal()">Will do it later</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== INVEST MODAL ===================== -->
+    <div class="modal-overlay" id="invest-modal">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div id="modal-pay-step">
+          <div class="section-label" style="margin-top:0;">Confirm investment</div>
+          <div class="summary-line"><div class="l">Sector</div><div class="v" id="sum-sector">Villas</div></div>
+          <div class="summary-line"><div class="l">Lock-in</div><div class="v" id="sum-term">1 Year</div></div>
+          <div class="summary-line"><div class="l">Rate</div><div class="v" id="sum-rate">9.5% p.a.</div></div>
+          <div class="summary-line"><div class="l">Amount</div><div class="v" id="sum-amount">₹50,000</div></div>
+
+          <div class="section-label">Pay via UPI</div>
+          <div class="upi-opt selected" onclick="selectUpi(this)"><div class="upi-logo" style="background:#5F259F;">G</div>Google Pay</div>
+          <div class="upi-opt" onclick="selectUpi(this)"><div class="upi-logo" style="background:#00BAF2;">P</div>PhonePe</div>
+          <div class="upi-opt" onclick="selectUpi(this)"><div class="upi-logo" style="background:#1B2421;">@</div>Other UPI app</div>
+
+          <button class="btn" style="margin-top:12px;" onclick="payNow()">Pay now</button>
+          <button class="btn-ghost" style="width:100%; text-align:center; margin-top:6px;" onclick="closeModal()">Cancel</button>
+        </div>
+        <div id="modal-success-step" style="display:none;">
+          <div class="success-wrap">
+            <div class="success-seal">✓</div>
+            <h2 style="font-family:var(--display); font-size:20px;">Investment confirmed</h2>
+            <p style="font-size:12.5px; color:#666; margin-top:8px; line-height:1.6;">Your ₹50,000 investment in Villas (1 Year) is active. Monthly income starts next cycle. We'll notify you 30 and 7 days before maturity.</p>
+            <button class="btn" style="margin-top:18px;" onclick="closeModal(); goto('screen-portfolio');">View in portfolio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let accountDetailsAdded = false;
+
+function goto(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById(id).scrollTop = 0;
+  if(id === 'screen-home') refreshHomeBanner();
+}
+
+/* ---------- Login / OTP (dummy) ---------- */
+function sendOtp(){
+  const phone = document.getElementById('login-phone').value || '+91 98765 43210';
+  document.getElementById('otp-phone-echo').innerText = phone;
+  document.getElementById('otp-block').style.display = 'block';
+  document.getElementById('otp-status').style.display = 'none';
+  document.getElementById('otp-input').value = '';
+  document.getElementById('otp-send-btn').innerText = 'OTP sent ✓';
+}
+function verifyOtp(){
+  // Dummy verification — any 6-digit-ish entry is accepted
+  document.getElementById('otp-status').style.display = 'flex';
+  document.getElementById('otp-verify-btn').innerText = 'Verified — continue';
+  setTimeout(()=>{ goto('screen-account'); }, 500);
+}
+
+/* ---------- Account details ---------- */
+function saveAccountDetails(skipped){
+  if(!skipped) accountDetailsAdded = true;
+  goto('screen-home');
+}
+function refreshHomeBanner(){
+  document.getElementById('home-acc-banner').style.display = accountDetailsAdded ? 'none' : 'block';
+}
+
+/* ---------- Invest gate ---------- */
+function handleInvestClick(){
+  if(!accountDetailsAdded){
+    document.getElementById('gate-modal').classList.add('active');
+    return;
+  }
+  openInvestModal();
+}
+function closeGateModal(){
+  document.getElementById('gate-modal').classList.remove('active');
+}
+
+function openSector(name, icon, rate){
+  document.getElementById('sec-name').innerText = name;
+  document.getElementById('sec-icon').innerText = icon;
+  goto('screen-sector');
+}
+function selectPlan(el){
+  document.querySelectorAll('.plan-card').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectUpi(el){
+  document.querySelectorAll('.upi-opt').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function openInvestModal(){
+  const sector = document.getElementById('sec-name').innerText;
+  const sel = document.querySelector('.plan-card.selected');
+  const amt = document.getElementById('invest-amount').value || '₹50,000';
+  document.getElementById('sum-sector').innerText = sector;
+  document.getElementById('sum-term').innerText = sel.dataset.term;
+  document.getElementById('sum-rate').innerText = sel.dataset.rate + ' p.a.';
+  document.getElementById('sum-amount').innerText = amt.startsWith('₹') ? amt : '₹'+amt;
+  document.getElementById('modal-pay-step').style.display='block';
+  document.getElementById('modal-success-step').style.display='none';
+  document.getElementById('invest-modal').classList.add('active');
+}
+function closeModal(){
+  document.getElementById('invest-modal').classList.remove('active');
+}
+function payNow(){
+  document.getElementById('modal-pay-step').style.display='none';
+  document.getElementById('modal-success-step').style.display='block';
+}
+</script>
+
+</body>
+</html>
