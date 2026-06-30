@@ -458,7 +458,8 @@
 
       <div class="bottomnav">
         <div class="navitem active" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
-        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Investment</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
         <div class="navitem" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
       </div>
     </div>
@@ -500,14 +501,13 @@
 
     <!-- ===================== PORTFOLIO ===================== -->
     <div class="screen" id="screen-portfolio">
-      <div class="topbar"><div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Investment</div><div class="brand-sub">Sector-wise holdings</div></div></div></div>
+      <div class="topbar"><div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Portfolio</div><div class="brand-sub">Sector-wise holdings</div></div></div></div>
 
       <div class="subtabbar">
         <div class="subtabs">
           <div class="subtab active" id="subtab-investment" onclick="switchPortfolioTab('investment')">Investment</div>
           <div class="subtab" id="subtab-earning" onclick="switchPortfolioTab('earning')">Earning</div>
         </div>
-        <div class="refer-pill" onclick="goto('screen-refer')">🎁 Refer &amp; Earn</div>
       </div>
 
       <div class="content" style="padding-top:12px;">
@@ -567,7 +567,8 @@
       </div>
       <div class="bottomnav">
         <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
-        <div class="navitem active" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Investment</div>
+        <div class="navitem active" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
         <div class="navitem" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
       </div>
     </div>
@@ -576,7 +577,6 @@
     <div class="screen" id="screen-refer">
       <div class="topbar">
         <div class="brand-row"><div class="seal">S</div><div><div class="brand-name">Refer &amp; Earn</div><div class="brand-sub">Invite friends, earn rewards</div></div></div>
-        <span class="toplink" onclick="goto('screen-portfolio')">Close</span>
       </div>
       <div class="content" style="padding-top:20px;">
         <div class="hero-band" style="border-radius:16px; padding:20px;">
@@ -593,6 +593,12 @@
         <div class="summary-line"><div class="l">1. Share your code with a friend</div></div>
         <div class="summary-line"><div class="l">2. They sign up &amp; invest ₹25,000+</div></div>
         <div class="summary-line"><div class="l">3. ₹500 credited to both of you</div></div>
+      </div>
+      <div class="bottomnav">
+        <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem active" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
+        <div class="navitem" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
       </div>
     </div>
 
@@ -666,7 +672,8 @@
       </div>
       <div class="bottomnav">
         <div class="navitem" onclick="goto('screen-home')"><div class="ic">⌂</div>Home</div>
-        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Investment</div>
+        <div class="navitem" onclick="goto('screen-portfolio')"><div class="ic">◔</div>Portfolio</div>
+        <div class="navitem" onclick="goto('screen-refer')"><div class="ic">🎁</div>Refer</div>
         <div class="navitem active" onclick="goto('screen-more')"><div class="ic">⋯</div>More</div>
       </div>
     </div>
