@@ -341,6 +341,24 @@
   .tc-tooltip:hover .tc-popup{ display:block; }
 
   .btn:disabled{ background:#ddd4ba; color:#9c9583; cursor:not-allowed; }
+
+  /* Logo Animation */
+  .b1 { animation: b1 3.5s infinite; opacity:0; }
+  .b2 { animation: b2 3.5s infinite; opacity:0; }
+  .b3 { animation: b3 3.5s infinite; opacity:0; }
+  .b4 { animation: b4 3.5s infinite; opacity:0; }
+  .b5 { animation: b5 3.5s infinite; opacity:0; }
+  .arr { animation: drawArr 3.5s infinite; stroke-dasharray: 40; stroke-dashoffset: 40; opacity:0; }
+  @keyframes b1 { 0%, 95%, 100%{opacity:0} 5%, 90%{opacity:1} }
+  @keyframes b2 { 0%, 10%, 95%, 100%{opacity:0} 15%, 90%{opacity:1} }
+  @keyframes b3 { 0%, 20%, 95%, 100%{opacity:0} 25%, 90%{opacity:1} }
+  @keyframes b4 { 0%, 30%, 95%, 100%{opacity:0} 35%, 90%{opacity:1} }
+  @keyframes b5 { 0%, 40%, 95%, 100%{opacity:0} 45%, 90%{opacity:1} }
+  @keyframes drawArr {
+    0%, 45%, 95%, 100% { stroke-dashoffset: 40; opacity:0; }
+    46% { opacity:1; }
+    65%, 90% { stroke-dashoffset: 0; opacity:1; }
+  }
 </style>
 </head>
 <body>
@@ -353,7 +371,7 @@
     <!-- ===================== SPLASH ===================== -->
     <div class="screen active" id="screen-splash" style="background:var(--ink); align-items:center; justify-content:center;">
       <div style="text-align:center;">
-        <div class="seal" style="width:54px; height:54px; margin:0 auto 16px;"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="seal" style="width:54px; height:54px; margin:0 auto 16px;"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="login-wordmark" style="font-size:34px;"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div>
         <div class="brand-sub" style="margin-top:8px; justify-content:center;">Your trusted investment partner</div>
       </div>
@@ -362,7 +380,7 @@
     <!-- ===================== LOGIN ===================== -->
     <div class="screen" id="screen-login">
       <div class="hero-band" style="padding-top:46px;">
-        <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="login-wordmark"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div>
         <h2 style="margin-top:14px;">Your trusted investment partner</h2>
         <p>Guaranteed monthly returns on real assets — villas, resorts, restaurants, layouts and more.</p>
@@ -393,7 +411,7 @@
 
     <!-- ===================== ACCOUNT DETAILS ===================== -->
     <div class="screen" id="screen-account">
-      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Account details</div><div class="brand-sub">For income payouts</div></div></div></div>
+      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Account details</div><div class="brand-sub">For income payouts</div></div></div></div>
       <div class="content" style="padding-top:20px;">
         <div class="notif" style="border-left-color:var(--gold);">
           <div class="notif-title">Please update your account details</div>
@@ -418,7 +436,7 @@
     <div class="screen" id="screen-home">
       <div class="topbar">
         <div class="brand-row">
-          <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div><div class="brand-name"><span class="wave-letter" style="animation-delay:0s">S</span><span class="wave-letter" style="animation-delay:.12s">I</span><span class="wave-letter" style="animation-delay:.24s">T</span><span class="wave-letter" style="animation-delay:.36s">A</span><span class="wave-letter" style="animation-delay:.48s">R</span></div><div class="brand-sub">Investments</div></div>
         </div>
         <div onclick="goto('screen-notif')" class="bell">🔔</div>
@@ -499,7 +517,7 @@
 
     <!-- ===================== PORTFOLIO ===================== -->
     <div class="screen" id="screen-portfolio">
-      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Portfolio</div><div class="brand-sub">Sector-wise holdings</div></div></div></div>
+      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Portfolio</div><div class="brand-sub">Sector-wise holdings</div></div></div></div>
 
       <div class="subtabbar">
         <div class="subtabs">
@@ -574,7 +592,7 @@
     <!-- ===================== REFER & EARN ===================== -->
     <div class="screen" id="screen-refer">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Refer &amp; Earn</div><div class="brand-sub">Invite friends, earn rewards</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Refer &amp; Earn</div><div class="brand-sub">Invite friends, earn rewards</div></div></div>
       </div>
       <div class="content" style="padding-top:20px;">
         <div class="hero-band" style="border-radius:16px; padding:20px;">
@@ -603,7 +621,7 @@
     <!-- ===================== NOTIFICATIONS ===================== -->
     <div class="screen" id="screen-notif">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Alerts</div><div class="brand-sub">Maturity &amp; income</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Alerts</div><div class="brand-sub">Maturity &amp; income</div></div></div>
         <span class="toplink" onclick="goto('screen-more')">Close</span>
       </div>
       <div class="content">
@@ -617,7 +635,7 @@
     <!-- ===================== PROFILE ===================== -->
     <div class="screen" id="screen-profile">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Profile</div><div class="brand-sub">Aravind Kumar</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Profile</div><div class="brand-sub">Aravind Kumar</div></div></div>
         <span class="toplink" onclick="goto('screen-more')">Close</span>
       </div>
       <div class="content">
@@ -640,7 +658,7 @@
 
     <!-- ===================== MORE ===================== -->
     <div class="screen" id="screen-more">
-      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">More</div><div class="brand-sub">Account &amp; settings</div></div></div></div>
+      <div class="topbar"><div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">More</div><div class="brand-sub">Account &amp; settings</div></div></div></div>
       <div class="content">
         <div class="section-label">Account</div>
         <div class="investor-row" onclick="goto('screen-profile')" style="cursor:pointer;">
@@ -679,7 +697,7 @@
     <!-- ===================== ADMIN ===================== -->
     <div class="screen" id="screen-admin">
       <div class="topbar">
-        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path d="M2 12 L20 2 L14 2 M20 2 L20 8" stroke="var(--text-light)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Admin</div><div class="brand-sub">Investor &amp; sector overview</div></div></div>
+        <div class="brand-row"><div class="seal"><svg viewBox="0 0 24 24" width="100%" height="100%"><rect class="b1" x="1" y="16" width="2.5" height="4" rx="1" fill="var(--rust)"/><rect class="b2" x="5.5" y="13" width="2.5" height="7" rx="1" fill="var(--gold-soft)"/><rect class="b3" x="10" y="10" width="2.5" height="10" rx="1" fill="var(--gold)"/><rect class="b4" x="14.5" y="7" width="2.5" height="13" rx="1" fill="var(--text-muted)"/><rect class="b5" x="19" y="4" width="2.5" height="16" rx="1" fill="var(--green-good)"/><path class="arr" d="M2 13 L20 3 L16 3 M20 3 L20 7" stroke="var(--text-light)" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="brand-name">Admin</div><div class="brand-sub">Investor &amp; sector overview</div></div></div>
         <span class="toplink" onclick="goto('screen-more')">Exit</span>
       </div>
       <div class="content">
